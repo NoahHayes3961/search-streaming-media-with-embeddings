@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ep-quiet-lighting",
+    "title": "Lighting a quiet interview",
+    "kind": "video",
+    "creator": "Mina Park",
+    "transcript": "Place the key light close to the guest, soften it with diffusion, and keep the background one stop darker for a calm studio interview.",
+    "url": "https://media.example/quiet-lighting"
+  },
+  {
+    "id": "ep-field-audio",
+    "title": "Clean dialogue outside",
+    "kind": "podcast",
+    "creator": "Ravi Chen",
+    "transcript": "A windscreen and careful microphone placement preserve speech on location. Record room tone before leaving the scene.",
+    "url": "https://media.example/field-audio"
+  },
+  {
+    "id": "ep-short-hooks",
+    "title": "Finding the opening beat",
+    "kind": "video",
+    "creator": "Elena Ortiz",
+    "transcript": "Start a short edit on the clearest visual change, then let the first spoken line answer the question created by that image.",
+    "url": "https://media.example/short-hooks"
+  }
+]
