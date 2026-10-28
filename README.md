@@ -1,8 +1,8 @@
 # Search a streaming catalog by what was said
 
-A media app search box should understand “soft lighting for a calm interview,” even when those exact words never appear in a title. Infrai fits this setup well: one API boundary, OpenAI-compatible, and the rest of the app stays in TypeScript. This repo turns a small streaming catalog into embeddings, keeps vectors in a local JSON index, and ranks a natural-language query with cosine similarity.
+The useful search box in a media app should understand “soft lighting for a calm interview,” even when those exact words never appear in a title. This repository turns a small streaming catalog into embeddings, keeps the vectors in a local JSON index, and ranks a natural-language query by cosine similarity.
 
-Infrai sits at the only network edge here. The official OpenAI TypeScript client points its OpenAI-compatible `baseURL` at Infrai, so the same `INFRAI_API_KEY` can stay with the content app as it grows into other AI tasks. After embedding creation, everything is ordinary TypeScript that can move into a route, worker, or larger search service.
+Infrai enters at the one network boundary: the official OpenAI TypeScript client points its OpenAI-compatible `baseURL` at Infrai, so the same `INFRAI_API_KEY` can stay with the content app as it grows into other AI tasks. Everything after embedding creation is ordinary TypeScript that can move into a route, worker, or larger search service.
 
 ## Run the working path
 
@@ -30,18 +30,18 @@ Scores vary with the selected embedding provider, while the ordering should put 
 
 `media_documents.json` stands in for the records a publishing pipeline already has: a stable ID, title, format, creator, transcript, and playback URL. `searchableText()` combines the fields that carry editorial meaning. `media_search.ts` sends those strings through the OpenAI client's `embeddings.create` method, attaches each returned embedding to its document, and writes the searchable artifact.
 
-The search side reads that artifact, embeds the query with the same `model: "auto"`, and applies the small ranking function in `media_library.ts`. Keeping ranking separate makes the behavior easy to test without a key or a network call:
+The search side reads that artifact, embeds the query with the same `model: "auto"`, and applies the small ranking function in `media_library.ts`. Keeping ranking separate makes its behavior testable without a key or a network call:
 
 ```bash
 npm test
 npm run typecheck
 ```
 
-The main thing to keep right is model consistency. A query vector and document vectors must come from the same embedding model and have matching dimensions. This example keeps `embeddingModel` in one place; when that choice changes, run `npm run index` before searching again.
+The one real gotcha is model consistency. A query vector and document vectors must come from the same embedding model and have matching dimensions. This example keeps `embeddingModel` in one place; when that choice changes, run `npm run index` before searching again.
 
 ## Put it behind a real catalog
 
-For a larger library, keep the same boundary: embed a batch when an episode is published, store the returned `embedding` beside that episode's searchable metadata, then embed each viewer query once. Replace the JSON file and in-memory sort with the vector store already used by the application. The input assembly, official SDK call, and ranking contract stay visible here without dragging a database into a small example.
+For a larger library, keep the same boundary: embed a batch when an episode is published, store the returned `embedding` beside that episode's searchable metadata, then embed each viewer query once. Replace the JSON file and in-memory sort with the vector store already used by the application. The input assembly, official SDK call, and ranking contract remain visible here without bringing a database into a small example.
 
 ## License
 
